@@ -16,9 +16,9 @@ docker run -v $PWD:/fuzzing cifuzz/jazzer                                       
 
 This will run [Jazzer](https://github.com/CodeIntelligenceTesting/jazzer) using
 the official Docker image, telling it to fuzz the `SimpleExample` target defined
-in [src/jazzer_clojure_example/core.clj]. Alternatively, you can run Jazzer on
-the `JsonistaExample` to fuzz Metosin's excellent JSON library (which we've
-chosen arbitrarily to demonstrate how to test libraries):
+in [core.clj](src/jazzer_clojure_example/core.clj). Alternatively, you can run
+Jazzer on the `JsonistaExample` to fuzz Metosin's excellent JSON library (which
+we've chosen arbitrarily to demonstrate how to test libraries):
 
 ``` shell
 docker run -v $PWD:/fuzzing cifuzz/jazzer                                       \
@@ -32,7 +32,9 @@ Jazzer to store all generated inputs that it considers useful into the
 `corpus-jsonista` directory in this project. Storing a corpus this way is useful
 if you want to be able to interrupt the fuzzer and resume it later without
 having to redo a lot of work: it will more or less continue from the state where
-you stopped it.
+you stopped it. (Check out the files in the corpus after running the fuzzer for
+a while! Most of them will contain somewhat creative JSON data that the fuzzer
+has come up with.)
 
 See the [Jazzer homepage](https://github.com/CodeIntelligenceTesting/jazzer) for
 more details about the fuzzer and how to configure it. Happy fuzzing!
