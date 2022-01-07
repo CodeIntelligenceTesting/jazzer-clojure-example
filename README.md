@@ -9,8 +9,8 @@ to fuzz-test Clojure code.
 Build a JAR with `lein uberjar`. Then run the fuzzer on it as follows:
 
 ``` shell
-docker run -v $PWD:/fuzzing cifuzz/jazzer                                       \
-       --cp=/fuzzing/target/jazzer-clojure-0.1.0-SNAPSHOT-standalone.jar        \
+docker run -v $PWD:/fuzzing cifuzz/jazzer                                               \
+       --cp=/fuzzing/target/jazzer-clojure-example-0.1.0-SNAPSHOT-standalone.jar        \
        --target-class=jazzer_clojure_example.targets.SimpleExample
 ```
 
@@ -21,9 +21,9 @@ Jazzer on the `JsonistaExample` to fuzz Metosin's excellent JSON library (which
 we've chosen arbitrarily to demonstrate how to test libraries):
 
 ``` shell
-docker run -v $PWD:/fuzzing cifuzz/jazzer                                       \
-       --cp=/fuzzing/target/jazzer-clojure-0.1.0-SNAPSHOT-standalone.jar        \
-       --target-class=jazzer_clojure_example.targets.JsonistaExample            \
+docker run -v $PWD:/fuzzing cifuzz/jazzer                                               \
+       --cp=/fuzzing/target/jazzer-clojure-example-0.1.0-SNAPSHOT-standalone.jar        \
+       --target-class=jazzer_clojure_example.targets.JsonistaExample                    \
        /fuzzing/corpus-jsonista
 ```
 

@@ -7,15 +7,14 @@
 
 (defn do-something
   "Not a very useful piece of code."
-  [x s]
-  (when (and (= 42 x)
-             (= "supersecret" s))
+  [s]
+  (when (= "supersecret" s)
     (throw (Exception. "You found the bug!"))))
 
 (fuzzing/deftarget jazzer_clojure_example.targets.SimpleExample [input]
-  ;; We ask the fuzzer for an integer and a string because that's the input
-  ;; needed for `do-something`.
-  (do-something (.consumeInt input) (.consumeRemainingAsString input)))
+  ;; We ask the fuzzer for a string because that's the input needed for
+  ;; `do-something`.
+  (do-something (.consumeRemainingAsString input)))
 
 ;;; Alternatively, let's test some library code!
 
