@@ -6,24 +6,30 @@ to fuzz-test Clojure code.
 
 ## Usage
 
-Build a JAR with `lein uberjar`. Then run the fuzzer on it as follows:
+### deps.edn
 
-``` shell
-docker run -v $PWD:/fuzzing cifuzz/jazzer                                               \
-       --cp=/fuzzing/target/jazzer-clojure-example-0.1.0-SNAPSHOT-standalone.jar        \
-       --target-class=jazzer_clojure_example.targets.SimpleExample
+Build a fuzzing JAR with
+
+```shell
+clojure "-T:build" "fuzzing-jar"
 ```
 
-This will run [Jazzer](https://github.com/CodeIntelligenceTesting/jazzer) using
-the official Docker image, telling it to fuzz the `SimpleExample` target defined
+Then run the fuzzer as follows:
+
+``` shell
+java -cp target/fuzzing.jar  com.code_intelligence.jazzer.Jazzer              \
+     --target_class=jazzer_clojure_example.targets.SimpleExample
+```
+
+This will run [Jazzer](https://github.com/CodeIntelligenceTesting/jazzer) as
+specified in `deps.edn`, telling it to fuzz the `SimpleExample` target defined
 in [core.clj](src/jazzer_clojure_example/core.clj). Alternatively, you can run
 Jazzer on the `JsonistaExample` to fuzz Metosin's excellent JSON library (which
 we've chosen arbitrarily to demonstrate how to test libraries):
 
 ``` shell
-docker run -v $PWD:/fuzzing cifuzz/jazzer                                               \
-       --cp=/fuzzing/target/jazzer-clojure-example-0.1.0-SNAPSHOT-standalone.jar        \
-       --target-class=jazzer_clojure_example.targets.JsonistaExample                    \
+java -cp target/fuzzing.jar  com.code_intelligence.jazzer.Jazzer              \
+       --target-class=jazzer_clojure_example.targets.JsonistaExample          \
        /fuzzing/corpus-jsonista
 ```
 
@@ -38,6 +44,29 @@ has come up with.)
 
 See the [Jazzer homepage](https://github.com/CodeIntelligenceTesting/jazzer) for
 more details about the fuzzer and how to configure it. Happy fuzzing!
+
+
+### Leiningen + Docker
+
+There is also an example leiningen target which builds the project without
+jazzer as a dependency, for use with the jazzer docker images:
+
+Build a JAR with `lein uberjar`. Then run the fuzzer on it as follows:
+
+``` shell
+docker run -v $PWD:/fuzzing cifuzz/jazzer                                               \
+       --cp=/fuzzing/target/jazzer-clojure-example-0.1.0-SNAPSHOT-standalone.jar        \
+       --target-class=jazzer_clojure_example.targets.SimpleExample
+```
+
+Alternatively, you can run Jazzer on the `JsonistaExample`:
+
+``` shell
+docker run -v $PWD:/fuzzing cifuzz/jazzer                                               \
+       --cp=/fuzzing/target/jazzer-clojure-example-0.1.0-SNAPSHOT-standalone.jar        \
+       --target-class=jazzer_clojure_example.targets.JsonistaExample                    \
+       /fuzzing/corpus-jsonista
+```
 
 ## License
 
